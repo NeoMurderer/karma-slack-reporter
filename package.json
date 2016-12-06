@@ -1,0 +1,27 @@
+{
+  "name": "karma-slack-reporter",
+  "version": "1.3.3",
+  "description": "Displays a summary of tested browsers and failed testcases after a test run.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/reporter.spec.js"
+  },
+  "author": "Oleg Nesterov <nm@thebas.ru>",
+  "license": "MIT",
+  "peerDependencies": {
+    "karma": "^1.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeoMurderer/karma-slack-reporter.git"
+  },
+  "keywords": [
+    "karma-plugin",
+    "karma-reporter"
+  ],
+  "devDependencies": {
+  },
+  "dependencies": {
+    "chalk": "^1.1.3"
+  }
+}
