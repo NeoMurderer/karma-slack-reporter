@@ -1,6 +1,5 @@
-const Slack = require('slack-node');
-
-
+const request = require('sync-request');
+const options = {}
 
 function strmul(s, n) {
 	var r = '';
@@ -23,8 +22,8 @@ const SlackReporter = function(baseReporterDecorator, config) {
     var specLength = config.slackReporter.specLength || 50;
     var overviewColumn = config.slackReporter.overviewColumn === false ? false : true;
 
-		const apiToken = config.slackReporter.apiToken;
-		const slack = new Slack(apiToken);
+		options.token = config.slackReporter.apiToken;
+		options.channel = config.slackReporter.channel;
     var specorder, specresults;
 
     this.specSuccess = this.specFailure = this.specSkipped = function(browser, result) {
@@ -182,19 +181,18 @@ const SlackReporter = function(baseReporterDecorator, config) {
     this.sendSlackMessages = function () {
 			let summaryMessage = '';
 			slackMessages.map( (message) => summaryMessage += message)
-
-      slack.api('chat.postMessage', {
-          text: summaryMessage,
-          channel: config.slackReporter.channel
-      }, (err, response) => {
-          if(response.ok) {
-            this.writeCommonMsg('Report sent to Slack')
-          }
-          else {
-            this.writeCommonMsg('Error sent report to Slack')
-            this.writeCommonMsg(response)
-          }
-      });
+			options.text = summaryMessage;
+			var res = request('GET', 'https://slack.com/api/chat.postMessage', {
+			  qs: options
+			});
+			let response = JSON.parse(res.getBody('utf8'));
+			if(response.ok) {
+				this.writeCommonMsg('Report sent to Slack')
+			}
+			else {
+				this.writeCommonMsg('Error sent report to Slack')
+				this.writeCommonMsg(response)
+			}
     }
 }
 
