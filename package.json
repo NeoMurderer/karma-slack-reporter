@@ -6,8 +6,7 @@
   "author": "Oleg Nesterov <nm@thebas.ru>",
   "license": "MIT",
   "peerDependencies": {
-    "karma": "^1.2.0",
-    
+    "karma": "^1.2.0"
   },
   "repository": {
     "type": "git",
